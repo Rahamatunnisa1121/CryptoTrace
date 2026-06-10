@@ -15,3 +15,5 @@ data/processed/preprocessing_pipeline.pkl
 # OS files
 .DS_Store
 Thumbs.db
+
+node_modules/
