@@ -1,0 +1,17 @@
+# Python virtual environment
+venv/
+
+# Environment variables
+.env
+
+# Python cache
+.pytest_cache/
+__pycache__/
+
+# Trained models
+data/processed/model.pkl
+data/processed/preprocessing_pipeline.pkl
+
+# OS files
+.DS_Store
+Thumbs.db

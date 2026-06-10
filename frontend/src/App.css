@@ -1,0 +1,331 @@
+/* ─── Global ─────────────────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Syne:wght@400;600;800&display=swap");
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #0a0e1a;
+  --surface:   #111827;
+  --surface2:  #1a2234;
+  --border:    #1e2d45;
+  --text:      #c8d8f0;
+  --text-dim:  #5a7294;
+  --accent:    #3b82f6;
+  --accent2:   #0ea5e9;
+  --high:      #e74c3c;
+  --med:       #e67e22;
+  --low:       #27ae60;
+  --root:      #f4d03f;
+  --font-ui:   "Syne", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+html, body, #root { height: 100%; overflow: hidden; }
+body { background: var(--bg); color: var(--text); font-family: var(--font-ui); }
+
+/* ─── Layout ─────────────────────────────────────────────────────────────── */
+.app { display: flex; height: 100vh; }
+
+/* ─── Sidebar ────────────────────────────────────────────────────────────── */
+.sidebar {
+  width: 320px;
+  min-width: 320px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.logo-icon { font-size: 24px; }
+.logo-text {
+  font-family: var(--font-ui);
+  font-size: 22px;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+}
+
+.sidebar-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+/* ─── Inputs ─────────────────────────────────────────────────────────────── */
+.addr-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.addr-input:focus { border-color: var(--accent); }
+
+.controls-row {
+  display: flex;
+  gap: 10px;
+}
+.controls-row label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.controls-row input[type="number"] {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 8px;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  outline: none;
+  width: 100%;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.filter-val {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  text-align: right;
+}
+
+/* ─── Buttons ────────────────────────────────────────────────────────────── */
+.trace-btn {
+  width: 100%;
+  padding: 11px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  letter-spacing: 0.3px;
+}
+.trace-btn:hover { opacity: 0.9; }
+.trace-btn:active { transform: scale(0.98); }
+.trace-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.retrace-btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+  background: transparent;
+  border: 1px solid var(--accent);
+  border-radius: 7px;
+  color: var(--accent);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.retrace-btn:hover { background: rgba(59,130,246,0.1); }
+.retrace-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ─── Error ──────────────────────────────────────────────────────────────── */
+.error-msg {
+  background: rgba(231,76,60,0.12);
+  border: 1px solid rgba(231,76,60,0.4);
+  border-radius: 7px;
+  padding: 9px 12px;
+  font-size: 12px;
+  color: #f1948a;
+  font-family: var(--font-mono);
+}
+
+/* ─── Divider ────────────────────────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 2px 0;
+}
+
+/* ─── Legend ─────────────────────────────────────────────────────────────── */
+.legend { display: flex; flex-direction: column; gap: 7px; }
+.legend-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  margin-bottom: 2px;
+}
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+/* ─── Node Panel ─────────────────────────────────────────────────────────── */
+.node-panel {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.panel-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text);
+}
+.panel-addr {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent2);
+  word-break: break-all;
+  padding: 6px 8px;
+  background: rgba(14, 165, 233, 0.07);
+  border-radius: 5px;
+}
+.panel-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.panel-row span:last-child { color: var(--text); font-weight: 600; font-family: var(--font-mono); }
+
+.panel-score-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.panel-score-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+/* ─── Badges ─────────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.badge-high   { background: rgba(231,76,60,0.2);  color: #e74c3c; }
+.badge-med    { background: rgba(230,126,34,0.2); color: #e67e22; }
+.badge-low    { background: rgba(39,174,96,0.2);  color: #27ae60; }
+.badge-unknown{ background: rgba(100,100,100,0.2);color: #888; }
+
+.supernode-badge {
+  margin-left: auto;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(155,89,182,0.2);
+  color: #9b59b6;
+}
+
+/* ─── Canvas area ────────────────────────────────────────────────────────── */
+.canvas-area {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+/* ─── Meta bar ───────────────────────────────────────────────────────────── */
+.meta-bar {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 20px;
+  background: rgba(17,24,39,0.9);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 7px 20px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  backdrop-filter: blur(8px);
+}
+.meta-bar span { color: var(--text); }
+.pulsing { animation: pulse 1.5s infinite; }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* ─── Empty state ────────────────────────────────────────────────────────── */
+.empty-state {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: var(--text-dim);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  pointer-events: none;
+  user-select: none;
+}
+.empty-icon { font-size: 64px; opacity: 0.25; }
+.empty-state > div:nth-child(2) { font-size: 16px; color: var(--text); font-weight: 600; }
+.empty-sub { font-size: 13px; max-width: 380px; line-height: 1.7; }
